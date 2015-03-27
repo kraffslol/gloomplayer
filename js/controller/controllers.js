@@ -16,6 +16,9 @@ gloomApp.controller('gloomController', function($scope, $location, $rootScope) {
 
   var playerVolume = 50;
   $scope.album = null;
+  $scope.artist = null;
+  $scope.title = null;
+  $scope.albumart = null;
 
   $('#volumeSlider').slider({
     range: "min",
@@ -59,8 +62,9 @@ gloomApp.controller('gloomController', function($scope, $location, $rootScope) {
 
 
 
-  $scope.playSong = function (playid) {
-    console.log(playid);
+  $scope.playSong = function (track) {
+    var playid = track.nid;
+    console.log(track);
 
     if(soundManager.getSoundById('player')) {
       soundManager.destroySound('player');
@@ -76,6 +80,12 @@ gloomApp.controller('gloomController', function($scope, $location, $rootScope) {
         volume: playerVolume,
         onload: function() {
           $('#progressSlider').slider( "option", "max", this.duration);
+
+          // Set title and artist
+          $scope.artist = track.artist;
+          $scope.title = track.title;
+          $scope.albumart = track.albumArtRef[0].url;
+          $scope.$apply();
         },
         whileplaying: function() {
           $('#progressSlider').slider( "value", this.position);
