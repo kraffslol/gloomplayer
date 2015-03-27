@@ -7,11 +7,15 @@
   "license": "GPL",
   "private": true,
   "window": {
-    "toolbar": true,
-    "frame": true,
+    "toolbar": false,
+    "frame": false,
     "width": 960,
-    "min-width": 960,
+    "min_width": 960,
     "height": 600,
     "position": "center"
+  },
+  "dependencies": {
+    "playmusic": "^1.1.1",
+    "request": "^2.54.0"
   }
 }

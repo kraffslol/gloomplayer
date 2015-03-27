@@ -1,12 +1,12 @@
-<table class="table" ng-hide="album == null">
+<table id="albumtable" class="table table-striped table-condensed table-hover" ng-hide="album == null">
   <thead>
     <tr>
-      <th></th>
       <th>Song</th>
       <th>Artist</th>
       <th>Album</th>
     </tr>
   </thead>
+  <!--
   <tbody>
     <tr ng-repeat="track in album.tracks">
       <td><button class="btn btn-xs btn-info" ng-click="playSong(track.nid)">Play</button></td>
@@ -14,5 +14,5 @@
       <td>{{track.artist}}</td>
       <td>{{track.album}}</td>
     </tr>
-  </tbody>
+  </tbody>-->
 </table>

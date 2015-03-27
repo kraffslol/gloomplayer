@@ -9,6 +9,16 @@ gloomApp.controller('albumController', function($scope, $location, $routeParams,
       if(success) {
         $scope.album = success;
         $scope.$apply();
+        $('#albumtable').DataTable( {
+          "sDom": 'rt',
+          "paging": false,
+          "data": success.tracks,
+          "columns": [
+            {"data": "title"},
+            {"data": "artist"},
+            {"data": "album"},
+          ]
+        });
       } else {
         console.log(error);
       }

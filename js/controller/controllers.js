@@ -12,7 +12,7 @@ gloomApp.controller('gloomController', function($scope, $location, $rootScope) {
   });
 
   //$rootScope.pm = pm;
-  $scope.pm = pm
+  $scope.pm = pm;
 
   var playerVolume = 50;
   $scope.album = null;
@@ -94,5 +94,21 @@ gloomApp.controller('gloomController', function($scope, $location, $rootScope) {
     $('#srch-term').blur();
     $location.path('/sr/' + $scope.searchstring);
   };
+
+  $scope.closeApp = function() {
+    require('nw.gui').App.quit();
+  }
+
+  $scope.openDebugWindow = function() {
+    require('nw.gui').Window.get().showDevTools();
+  }
+
+  $scope.goForward = function() {
+    window.history.forward();
+  }
+
+  $scope.goBack = function() {
+    window.history.back();
+  }
 
 });
