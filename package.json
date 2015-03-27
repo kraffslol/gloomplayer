@@ -1,0 +1,17 @@
+{
+  "name": "Gloom",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.html",
+  "author": "Kraffs",
+  "license": "GPL",
+  "private": true,
+  "window": {
+    "toolbar": true,
+    "frame": true,
+    "width": 960,
+    "min-width": 960,
+    "height": 600,
+    "position": "center"
+  }
+}

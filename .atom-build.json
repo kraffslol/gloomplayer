@@ -1,0 +1,6 @@
+{
+  "cmd": "nw.exe",
+  "args": [ "--enable-logging", "{PROJECT_PATH}" ],
+  "sh": false,
+  "cwd": "C:/Users/Kraffs/Dropbox/nw"
+}

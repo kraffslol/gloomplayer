@@ -1,0 +1,14 @@
+<h1>Albums</h1>
+<div ng-repeat="r in albums">
+<a href="#/album/{{r.album.albumId}}">{{r.album.name}}</a>
+</div>
+
+<h1>Tracks</h1>
+<div ng-repeat="r in tracks">
+<a ng-click="playSong(r.track.nid)">{{r.track.title}}</a>
+</div>
+
+<h1>Artists</h1>
+<div ng-repeat="r in artists">
+<a href="#/artist/{{r.artist.artistId}}">{{r.artist.name}}</a>
+</div>
