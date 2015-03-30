@@ -2,8 +2,6 @@ gloomApp.controller('albumController', function($scope, $location, $routeParams,
   $scope.albumId = $routeParams.albumId;
   $scope.album = null;
 
-  // Bq2uisbtqvsh5fninrac2kzgc5a
-
   $scope.getAlbum = function() {
     $scope.pm.getAlbum($scope.albumId, true, function(success, error) {
       if(success) {
@@ -19,6 +17,7 @@ gloomApp.controller('albumController', function($scope, $location, $routeParams,
             {"data": "title"},
             {"data": "artist"},
             {"data": "album"},
+            {"data": "durationMillis", "render": function(data) { return $scope.moment.utc(parseInt(data)).format("m:ss");  }}
           ]
         });
 
@@ -41,5 +40,14 @@ gloomApp.controller('albumController', function($scope, $location, $routeParams,
     });
   };
 
-  $scope.getAlbum();
+  // Get album if authed.
+  if($scope.authed) {
+    $scope.getAlbum();
+  } else {
+    // If page is refreshed wait for GMusic auth before trying to load the album.
+    $scope.$on('login', function() {
+      $scope.getAlbum();
+    })
+  }
+
 });

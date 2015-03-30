@@ -5,14 +5,35 @@ gloomApp.controller('gloomController', function($scope, $location, $rootScope) {
   var pm = new PlayMusic();
   var os = require('os');
   var config = require('./config');
+  var lastfm = require('simple-lastfm');
+  var moment = require('moment');
+
+  $scope.moment = moment;
 
   pm.init({email: config.email, password: config.password}, function() {
     console.log("authed");
-    //$scope.getAlbum();
+    $scope.authed = true;
+    $rootScope.$broadcast("login");
   });
 
-  //$rootScope.pm = pm;
   $scope.pm = pm;
+
+  // Enable lastfm if in config.
+  if(config.lastfmusername && config.lastfmpassword) {
+    $scope.lastfm = new lastfm({
+      api_key: 'b7166ea278d7c5e593528b1bfe147e2c',
+      api_secret: '3c7676529b6730fa34c0da9f3417bc2e',
+      username: config.lastfmusername,
+      password: config.lastfmpassword
+    });
+
+    $scope.lastfm.getSessionKey(function(result) {
+      console.log("Lastfm Session Key: " + result.session_key);
+      if(result.error) {
+        console.log("LastFm Error: " + result.error);
+      }
+    });
+  }
 
   var playerVolume = 50;
   $scope.album = null;
@@ -87,11 +108,27 @@ gloomApp.controller('gloomController', function($scope, $location, $rootScope) {
           $scope.albumart = track.albumArtRef[0].url;
           $scope.$apply();
         },
+        onplay: function() {
+          // Update now playing
+          if($scope.lastfm) {
+            $scope.lastfm.scrobbleNowPlayingTrack({
+              artist: track.artist,
+              track: track.title
+            });
+          }
+        },
         whileplaying: function() {
           $('#progressSlider').slider( "value", this.position);
         },
         onfinish: function() {
           $('#progressSlider').slider( "value",  0 );
+          // Scrobble
+          if($scope.lastfm) {
+            $scope.lastfm.scrobbleTrack({
+              artist: track.artist,
+              track: track.title
+            });
+          }
         }
       });
 
@@ -104,6 +141,10 @@ gloomApp.controller('gloomController', function($scope, $location, $rootScope) {
     $('#srch-term').blur();
     $location.path('/sr/' + $scope.searchstring);
   };
+
+  /*
+    NW SPECIFIC
+  */
 
   $scope.closeApp = function() {
     require('nw.gui').App.quit();
@@ -120,5 +161,17 @@ gloomApp.controller('gloomController', function($scope, $location, $rootScope) {
   $scope.goBack = function() {
     window.history.back();
   }
+
+  /*
+   KEYBINDS
+  */
+
+  Mousetrap.bind('space', function() {
+    $scope.playpause();
+  });
+
+  Mousetrap.bind('f5', function() {
+    location.reload();
+  });
 
 });

@@ -15,7 +15,9 @@
     "position": "center"
   },
   "dependencies": {
+    "moment": "^2.9.0",
     "playmusic": "^1.1.1",
-    "request": "^2.54.0"
+    "request": "^2.54.0",
+    "simple-lastfm": "^1.0.5"
   }
 }
